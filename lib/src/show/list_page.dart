@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:potter_api/src/show/list_controller.dart';
 import 'package:potter_api/src/show/list_repository.dart';
 
+import '../components/custom_avatar.dart';
+import '../components/custom_subtitle.dart';
+
 class ListPage extends StatefulWidget {
   const ListPage({super.key});
 
@@ -15,6 +18,7 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 232, 231, 231),
+      appBar: AppBar(title: const Text("H.Potter Api")),
       body: SafeArea(
           child: Center(
         child: FutureBuilder(
@@ -32,39 +36,22 @@ class _ListPageState extends State<ListPage> {
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Card(
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CircleAvatar(
-                              radius: 35,
-                              backgroundColor:
-                                  const Color.fromARGB(255, 232, 231, 231),
-                              backgroundImage:
-                                  NetworkImage(snapshot.data![index].image),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 4, bottom: 4),
+                        child: ListTile(
+                          leading:
+                              CustomAvatar(image: snapshot.data![index].image),
+                          title: Text(
+                            snapshot.data![index].name,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 6, 3, 190),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            width: 25,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                snapshot.data![index].name,
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 6, 3, 190),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                snapshot.data![index].house,
-                              ),
-                            ],
-                          ),
-                        ],
+                          subtitle: CustomSubtitle(
+                              subtitle: snapshot.data![index].house),
+                        ),
                       ),
                     ),
                   );
